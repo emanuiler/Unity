@@ -35,6 +35,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4474195170012778}
+  - component: {fileID: 114891956328066130}
   m_Layer: 0
   m_Name: JShape
   m_TagString: Untagged
@@ -159,6 +160,18 @@ Transform:
   m_Father: {fileID: 4474195170012778}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114891956328066130
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1655172577907180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 752e3891adf30a4458abf5201d6982e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!212 &212054332604271820
 SpriteRenderer:
   m_ObjectHideFlags: 1
