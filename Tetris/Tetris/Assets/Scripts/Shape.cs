@@ -20,7 +20,7 @@ public class Shape : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("a"))
+        if (Input.GetKey("a"))
         {
             transform.position += new Vector3(-1, 0, 0);
 
@@ -36,7 +36,7 @@ public class Shape : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown("d"))
+        if (Input.GetKey("d"))
         {
             transform.position += new Vector3(1, 0, 0);
 
@@ -52,7 +52,7 @@ public class Shape : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown("s") || Time.time - lastMoveDown >= 1)
+        if (Input.GetKey("s") || Time.time - lastMoveDown >= 1)
         {
             transform.position += new Vector3(0, -1, 0);
 
