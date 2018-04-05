@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Shape : MonoBehaviour
 {
@@ -61,6 +62,14 @@ public class Shape : MonoBehaviour
             {
                 transform.position += new Vector3(0, 1, 0);
 
+                bool rowDeleted = GameBoard.DeleteAllFullRows();
+
+                if (rowDeleted)
+                {
+                    GameBoard.DeleteAllFullRows();
+
+                    IncreaseTextUIScore();
+                }
                 enabled = false;
 
                 FindObjectOfType<ShapeSpawner>().SpawnShape();
@@ -107,7 +116,7 @@ public class Shape : MonoBehaviour
         //int childCount = 0;
         foreach (Transform childBlock in transform)
         {
-            Vector2 vect = childBlock.position;
+            Vector2 vect = RoundVector(childBlock.position);
 
             //childCount++;
             //Debug.Log(childCount + " " + childBlock.position);
@@ -126,10 +135,17 @@ public class Shape : MonoBehaviour
         }
         return true;
     }
+
+    public Vector2 RoundVector(Vector2 vect)
+    {
+        return new Vector2(Mathf.Round(vect.x), Mathf.Round(vect.y));
+
+    }
+     
     public static bool IsInBorder(Vector2 pos)
     {
         return ((int)pos.x >= 0 &&
-            (int)pos.x <= 8 &&
+            (int)pos.x <= 9 &&
             (int)pos.y >= 0);
     }
 
@@ -149,14 +165,25 @@ public class Shape : MonoBehaviour
 
         foreach (Transform childBlock in transform)
         {
-            Vector2 vect = childBlock.position;
+            Vector2 vect = RoundVector(childBlock.position);
 
             GameBoard.gameBoard[(int)vect.x, (int)vect.y] = childBlock;
 
-            Debug.Log("Cube at: " + (int)vect.x + " " + (int)vect.y);
+            Debug.Log("Cube at: " + vect.x + " " + vect.y);
 
         }
 
-        GameBoard.PrintArray();
+        //GameBoard.PrintArray();
+    }
+
+    void IncreaseTextUIScore()
+    {
+        var textUIComp = GameObject.Find("Score").GetComponent<Text>();
+
+        int score = int.Parse(textUIComp.text);
+
+        score++;
+
+        textUIComp.text = score.ToString();
     }
 }

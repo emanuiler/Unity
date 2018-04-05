@@ -36,4 +36,64 @@ public class GameBoard : MonoBehaviour
         myArrayComp.text = arrayOutput;
 
     }
+
+    public static bool DeleteAllFullRows()
+    {
+
+        for (int row = 0; row < 20; ++row)
+        {
+            if (IsRowFull(row))
+            {
+                DeleteRow(row);
+
+                // Add sound
+
+                return true;
+            }
+
+          //return false;
+        }
+        //to check
+        return false;
+    }
+
+    public static bool IsRowFull(int row)
+    {
+        for (int col = 0; col < 10; ++col)
+        {
+            if (gameBoard[col, row] == null)
+            {
+                return false;
+            }
+
+        }
+
+        return true;
+    }
+
+    public static void DeleteRow(int row)
+    {
+        for (int col = 0; col < 10; ++col)
+        {
+            Destroy(gameBoard[col, row].gameObject);
+            gameBoard[col, row] = null;
+        }
+
+        row++;
+
+        for (int j = row; j < 20; ++j)
+        {
+            for (int col = 0; col < 10; ++col)
+            {
+                if (gameBoard[col, j] != null)
+                {
+                    gameBoard[col, j - 1] = gameBoard[col, j];
+
+                    gameBoard[col, j] = null;
+
+                    gameBoard[col, j - 1].position += new Vector3(0, -1, 0);
+                }
+            }
+        }
+    }
 }
