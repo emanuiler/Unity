@@ -8,7 +8,7 @@ public class GameBoard : MonoBehaviour
 
     public static Transform[,] gameBoard = new Transform[10, 20];
 
-    public static void PrintArray()
+   /* public static void PrintArray()
     {
         string arrayOutput = "";
 
@@ -36,6 +36,7 @@ public class GameBoard : MonoBehaviour
         myArrayComp.text = arrayOutput;
 
     }
+    */
 
     public static bool DeleteAllFullRows()
     {
@@ -46,14 +47,14 @@ public class GameBoard : MonoBehaviour
             {
                 DeleteRow(row);
 
-                // Add sound
+                SoundManager.Instance.PlayOneShot(SoundManager.Instance.rowDelete);
 
                 return true;
             }
 
           //return false;
         }
-        //to check
+        //to check if works?
         return false;
     }
 

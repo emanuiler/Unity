@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Shape : MonoBehaviour
 {
 
-    public float speed = 1.0f;
+    public static float speed = 1.0f;
 
     float lastMoveDown = 0;
 
@@ -20,7 +20,7 @@ public class Shape : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("a"))
+        if (Input.GetKeyDown("a"))
         {
             transform.position += new Vector3(-1, 0, 0);
 
@@ -33,10 +33,12 @@ public class Shape : MonoBehaviour
             else
             {
                 UpdateGameBoard();
+
+                SoundManager.Instance.PlayOneShot(SoundManager.Instance.shapeMove);
             }
         }
 
-        if (Input.GetKey("d"))
+        if (Input.GetKeyDown("d"))
         {
             transform.position += new Vector3(1, 0, 0);
 
@@ -49,6 +51,8 @@ public class Shape : MonoBehaviour
             else
             {
                 UpdateGameBoard();
+
+                SoundManager.Instance.PlayOneShot(SoundManager.Instance.shapeMove);
             }
         }
 
@@ -73,10 +77,14 @@ public class Shape : MonoBehaviour
                 enabled = false;
 
                 FindObjectOfType<ShapeSpawner>().SpawnShape();
+
+                SoundManager.Instance.PlayOneShot(SoundManager.Instance.shapeStop);
             }
             else
             {
                 UpdateGameBoard();
+
+                SoundManager.Instance.PlayOneShot(SoundManager.Instance.shapeMove);
             }
 
             lastMoveDown = Time.time;
@@ -95,6 +103,8 @@ public class Shape : MonoBehaviour
             else
             {
                 UpdateGameBoard();
+
+                SoundManager.Instance.PlayOneShot(SoundManager.Instance.rotateSound);
             }
         }
 
@@ -107,6 +117,11 @@ public class Shape : MonoBehaviour
             if (!IsInGrid())
             {
                 transform.Rotate(0, 0, 90);
+            }
+            else
+            {
+                UpdateGameBoard();
+                SoundManager.Instance.PlayOneShot(SoundManager.Instance.rotateSound);
             }
         }
     }
