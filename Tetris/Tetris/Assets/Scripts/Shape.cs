@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Shape : MonoBehaviour
@@ -14,9 +15,25 @@ public class Shape : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (!IsInGrid())
+        {
+            SoundManager.Instance.PlayOneShot(SoundManager.Instance.gameOver);
+            Invoke("OpenGameOverScene", 0.1f);
+        }
 
+        InvokeRepeating("IncreaseSpeed", 2.0f, 2.0f);
     }
 
+    void OpenGameOverScene()
+    {
+        Destroy(gameObject);
+        SceneManager.LoadScene("game_over");
+    }
+
+    void IncreaseSpeed()
+    {
+        Shape.speed -= 0.001f;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -56,7 +73,7 @@ public class Shape : MonoBehaviour
             }
         }
 
-        if (Input.GetKey("s") || Time.time - lastMoveDown >= 1)
+        if (Input.GetKey("s") || Time.time - lastMoveDown >= Shape.speed)
         {
             transform.position += new Vector3(0, -1, 0);
 
@@ -128,7 +145,7 @@ public class Shape : MonoBehaviour
 
     public bool IsInGrid()
     {
-        //int childCount = 0;
+        //int childCount = 0; this is for debug
         foreach (Transform childBlock in transform)
         {
             Vector2 vect = RoundVector(childBlock.position);
@@ -156,7 +173,7 @@ public class Shape : MonoBehaviour
         return new Vector2(Mathf.Round(vect.x), Mathf.Round(vect.y));
 
     }
-     
+
     public static bool IsInBorder(Vector2 pos)
     {
         return ((int)pos.x >= 0 &&
